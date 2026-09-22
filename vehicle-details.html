@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vehicle Details — Vehicle Service Tracker</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <div class="overlay" id="overlay"></div>
+
+  <!-- ══════════════════════════════════════════════════
+       HEADER
+  ══════════════════════════════════════════════════ -->
+  <header class="header">
+    <a class="header__logo" href="index.html">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+           stroke="currentColor" stroke-width="1.8">
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="M8 6h8l2 5H6L8 6zM3 11h18v4H3v-4zm3 4v2m12-2v2"/>
+        <circle cx="6.5" cy="17.5" r="1.5"/>
+        <circle cx="17.5" cy="17.5" r="1.5"/>
+      </svg>
+      Service<span>Tracker</span>
+    </a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+           stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+  </header>
+
+  <!-- ══════════════════════════════════════════════════
+       SIDEBAR
+  ══════════════════════════════════════════════════ -->
+  <nav class="sidebar" id="sidebar" aria-label="Main navigation">
+    <p class="nav__label">Menu</p>
+
+    <a class="nav__link" href="index.html">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+           stroke="currentColor" stroke-width="1.8">
+        <rect x="3" y="3" width="7" height="7" rx="1"/>
+        <rect x="14" y="3" width="7" height="7" rx="1"/>
+        <rect x="3" y="14" width="7" height="7" rx="1"/>
+        <rect x="14" y="14" width="7" height="7" rx="1"/>
+      </svg>
+      Dashboard
+    </a>
+
+    <a class="nav__link" href="vehicles.html">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+           stroke="currentColor" stroke-width="1.8">
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="M8 6h8l2 5H6L8 6zM3 11h18v4H3v-4zm3 4v2m12-2v2"/>
+        <circle cx="6.5" cy="17.5" r="1.5"/>
+        <circle cx="17.5" cy="17.5" r="1.5"/>
+      </svg>
+      My Vehicles
+    </a>
+
+    <a class="nav__link" href="add-vehicle.html">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+           stroke="currentColor" stroke-width="1.8">
+        <circle cx="12" cy="12" r="9"/>
+        <path stroke-linecap="round" d="M12 8v8M8 12h8"/>
+      </svg>
+      Add Vehicle
+    </a>
+  </nav>
+
+  <!-- ══════════════════════════════════════════════════
+       MAIN CONTENT
+  ══════════════════════════════════════════════════ -->
+  <main class="main">
+
+    <div id="alertContainer"></div>
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="index.html">Dashboard</a>
+      <span class="sep">›</span>
+      <a href="vehicles.html">My Vehicles</a>
+      <span class="sep">›</span>
+      <span id="crumbVehicleName">Vehicle Details</span>
+    </nav>
+
+    <!-- ── Vehicle hero card ── -->
+    <div class="vehicle-hero">
+      <div class="vehicle-hero__icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+             stroke="currentColor" stroke-width="1.6">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M8 6h8l2 5H6L8 6zM3 11h18v4H3v-4zm3 4v2m12-2v2"/>
+          <circle cx="6.5" cy="17.5" r="1.5"/>
+          <circle cx="17.5" cy="17.5" r="1.5"/>
+        </svg>
+      </div>
+
+      <div class="vehicle-hero__info">
+        <h2 id="vehicleTitle">Loading…</h2>
+        <p id="vehicleSubtitle"></p>
+        <div class="vehicle-hero__meta" id="vehicleMeta"></div>
+      </div>
+
+      <div class="vehicle-hero__actions">
+        <a class="btn btn-outline btn-sm" id="editVehicleBtn"
+           href="#" title="Edit vehicle details">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+               stroke="currentColor" stroke-width="2" style="width:14px;height:14px;">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+          </svg>
+          Edit
+        </a>
+        <button class="btn btn-danger btn-sm" id="deleteVehicleBtn" title="Delete this vehicle">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+               stroke="currentColor" stroke-width="2" style="width:14px;height:14px;">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7
+                 m5 4v6m4-6v6M1 7h22M8 7V5a1 1 0 011-1h6a1 1 0 011 1v2"/>
+          </svg>
+          Delete
+        </button>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════
+         VEHICLE DETAILS GRID
+    ══════════════════════════════════════════════ -->
+    <div class="vehicle-details-grid">
+      <div class="detail-item">
+        <span class="detail-label">Year</span>
+        <span class="detail-value" id="detailYear">—</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Make</span>
+        <span class="detail-value" id="detailMake">—</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Model</span>
+        <span class="detail-value" id="detailModel">—</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Type</span>
+        <span class="detail-value" id="detailType">—</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Registration</span>
+        <span class="detail-value" id="detailReg">—</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Current KM</span>
+        <span class="detail-value" id="detailOdometer">—</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Purchase Date</span>
+        <span class="detail-value" id="detailPurchaseDate">—</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Last Service</span>
+        <span class="detail-value" id="detailLastService">—</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Next Service</span>
+        <span class="detail-value" id="detailNextService">—</span>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════
+         SERVICE SUMMARY
+    ══════════════════════════════════════════════ -->
+    <div class="section-title">Service Summary</div>
+    <div class="service-summary-grid">
+      
+      <div class="summary-card">
+        <div class="summary-card__icon icon-green">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+               stroke="currentColor" stroke-width="1.8">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2
+                 M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2
+                 m-6 9l2 2 4-4"/>
+          </svg>
+        </div>
+        <div class="summary-card__label">Total Services</div>
+        <div class="summary-card__value" id="summaryServiceCount">0</div>
+      </div>
+
+      <div class="summary-card">
+        <div class="summary-card__icon icon-amber">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+               stroke="currentColor" stroke-width="1.8">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8V6m0 12v-2"/>
+          </svg>
+        </div>
+        <div class="summary-card__label">Total Cost</div>
+        <div class="summary-card__value" id="summaryTotalCost">$0.00</div>
+      </div>
+
+      <div class="summary-card">
+        <div class="summary-card__icon icon-blue">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+               stroke="currentColor" stroke-width="1.8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+        </div>
+        <div class="summary-card__label">Last Service</div>
+        <div class="summary-card__value" id="summaryLastService">—</div>
+        <div class="summary-card__subtitle" id="summaryLastServiceType">—</div>
+      </div>
+
+      <div class="summary-card">
+        <div class="summary-card__icon icon-red">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+               stroke="currentColor" stroke-width="1.8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+        </div>
+        <div class="summary-card__label">Next Service</div>
+        <div class="summary-card__value" id="summaryNextService">—</div>
+        <div class="summary-card__subtitle" id="summaryNextServiceKM">—</div>
+      </div>
+
+    </div>
+
+    <!-- ══════════════════════════════════════════════
+         SERVICE HISTORY
+    ══════════════════════════════════════════════ -->
+    <div id="serviceHistorySection">
+      <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;">
+        <span>
+          Service History
+          <span class="badge badge-blue" id="serviceCount" style="font-size:.72rem;vertical-align:middle;margin-left:.4rem;">0</span>
+        </span>
+      </div>
+
+      <!-- Empty state -->
+      <div class="empty-state" id="serviceEmptyState" style="display:none;">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2
+               M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+        </svg>
+        <h3>No service records</h3>
+        <p>Use the form below to log the first service for this vehicle.</p>
+      </div>
+
+      <!-- Table -->
+      <div class="table-wrapper" id="serviceTableWrapper">
+        <table aria-label="Service history">
+          <thead>
+            <tr>
+              <th class="sortable" data-sort="serviceDate">
+                Date
+                <span class="sort-indicator"></span>
+              </th>
+              <th class="sortable" data-sort="serviceType">
+                Service Type
+                <span class="sort-indicator"></span>
+              </th>
+              <th class="sortable" data-sort="odometerReading">
+                KM
+                <span class="sort-indicator"></span>
+              </th>
+              <th class="sortable" data-sort="totalCost">
+                Cost
+                <span class="sort-indicator"></span>
+              </th>
+              <th>Service Center</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="serviceTableBody">
+            <!-- Rows injected by vehicle-details.js -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════
+         ADD SERVICE FORM
+    ══════════════════════════════════════════════ -->
+    <div style="margin-top:2rem;">
+      <div class="section-title">Log a New Service</div>
+
+      <div class="form-card">
+        <form id="addServiceForm" novalidate>
+
+          <!-- Type & Date -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div class="form-group">
+              <label for="serviceType">Service Type <span style="color:var(--danger)">*</span></label>
+              <select id="serviceType" name="serviceType" required>
+                <option value="">Select service type...</option>
+                <!-- Options populated by JS -->
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="serviceDate">Date <span style="color:var(--danger)">*</span></label>
+              <input type="date" id="serviceDate" name="serviceDate" required />
+            </div>
+          </div>
+
+          <!-- Odometer & Service Center -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div class="form-group">
+              <label for="odometerReading">Odometer Reading (km)</label>
+              <input type="number" id="odometerReading" name="odometerReading"
+                     placeholder="e.g. 45000" min="0" />
+            </div>
+            <div class="form-group">
+              <label for="serviceCenter">Service Center / Mechanic</label>
+              <input type="text" id="serviceCenter" name="serviceCenter"
+                     placeholder="e.g. QuickLube Downtown"
+                     maxlength="100" />
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="form-group">
+            <label for="description">Service Description</label>
+            <textarea id="description" name="description"
+                      placeholder="Describe what work was performed..."
+                      maxlength="500" rows="2"></textarea>
+          </div>
+
+          <!-- Parts Replaced -->
+          <div class="form-group">
+            <label for="partsReplaced">Parts Replaced</label>
+            <textarea id="partsReplaced" name="partsReplaced"
+                      placeholder="List any parts that were replaced..."
+                      maxlength="300" rows="2"></textarea>
+          </div>
+
+          <!-- Costs -->
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;">
+            <div class="form-group">
+              <label for="laborCost">Labor Cost ($)</label>
+              <input type="number" id="laborCost" name="laborCost"
+                     placeholder="0.00" min="0" step="0.01" />
+            </div>
+            <div class="form-group">
+              <label for="partsCost">Parts Cost ($)</label>
+              <input type="number" id="partsCost" name="partsCost"
+                     placeholder="0.00" min="0" step="0.01" />
+            </div>
+            <div class="form-group">
+              <label for="totalCost">Total Cost ($)</label>
+              <input type="text" id="totalCost" name="totalCost"
+                     readonly class="readonly" placeholder="0.00" />
+            </div>
+          </div>
+
+          <!-- Next Service -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div class="form-group">
+              <label for="nextServiceDate">Next Service Date</label>
+              <input type="date" id="nextServiceDate" name="nextServiceDate" />
+            </div>
+            <div class="form-group">
+              <label for="nextServiceKM">Next Service KM</label>
+              <input type="number" id="nextServiceKM" name="nextServiceKM"
+                     placeholder="e.g. 50000" min="0" />
+            </div>
+          </div>
+
+          <!-- Notes -->
+          <div class="form-group">
+            <label for="serviceNotes">Notes</label>
+            <textarea id="serviceNotes" name="serviceNotes"
+                      placeholder="Any additional notes about this service..."
+                      maxlength="300"></textarea>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                   stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" d="M12 5v14M5 12h14"/>
+              </svg>
+              Save Service Record
+            </button>
+            <a href="vehicles.html" class="btn btn-outline">Back to Vehicles</a>
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ══════════════════════════════════════════════
+       DELETE CONFIRMATION MODAL
+  ══════════════════════════════════════════════ -->
+  <div class="modal-overlay" id="deleteModal">
+    <div class="modal">
+      <div class="modal__header">
+        <h3>Delete Vehicle</h3>
+      </div>
+      <div class="modal__body">
+        <p>Are you sure you want to delete <strong id="modalVehicleName">this vehicle</strong> and all its service records?</p>
+        <p class="text-muted">This action cannot be undone.</p>
+      </div>
+      <div class="modal__footer">
+        <button class="btn btn-outline" id="modalCancelBtn">Cancel</button>
+        <button class="btn btn-danger" id="modalConfirmBtn">Delete Vehicle</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/storage.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/vehicle-details.js"></script>
+
+</body>
+</html>

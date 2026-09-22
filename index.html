@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — Vehicle Service Tracker</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ── Mobile overlay (closes sidebar when tapped) ── -->
+  <div class="overlay" id="overlay"></div>
+
+  <!-- ══════════════════════════════════════════════════
+       HEADER
+  ══════════════════════════════════════════════════ -->
+  <header class="header">
+    <a class="header__logo" href="index.html">
+      <!-- Car icon -->
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+           stroke="currentColor" stroke-width="1.8">
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="M8 6h8l2 5H6L8 6zM3 11h18v4H3v-4zm3 4v2m12-2v2"/>
+        <circle cx="6.5" cy="17.5" r="1.5"/>
+        <circle cx="17.5" cy="17.5" r="1.5"/>
+      </svg>
+      Service<span>Tracker</span>
+    </a>
+
+    <!-- Hamburger (mobile only) -->
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+           stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+  </header>
+
+  <!-- ══════════════════════════════════════════════════
+       SIDEBAR
+  ══════════════════════════════════════════════════ -->
+  <nav class="sidebar" id="sidebar" aria-label="Main navigation">
+    <p class="nav__label">Menu</p>
+
+    <a class="nav__link" href="index.html">
+      <!-- Dashboard icon -->
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+           stroke="currentColor" stroke-width="1.8">
+        <rect x="3" y="3" width="7" height="7" rx="1"/>
+        <rect x="14" y="3" width="7" height="7" rx="1"/>
+        <rect x="3" y="14" width="7" height="7" rx="1"/>
+        <rect x="14" y="14" width="7" height="7" rx="1"/>
+      </svg>
+      Dashboard
+    </a>
+
+    <a class="nav__link" href="vehicles.html">
+      <!-- Car icon -->
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+           stroke="currentColor" stroke-width="1.8">
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="M8 6h8l2 5H6L8 6zM3 11h18v4H3v-4zm3 4v2m12-2v2"/>
+        <circle cx="6.5" cy="17.5" r="1.5"/>
+        <circle cx="17.5" cy="17.5" r="1.5"/>
+      </svg>
+      My Vehicles
+    </a>
+
+    <a class="nav__link" href="add-vehicle.html">
+      <!-- Plus-circle icon -->
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+           stroke="currentColor" stroke-width="1.8">
+        <circle cx="12" cy="12" r="9"/>
+        <path stroke-linecap="round" d="M12 8v8M8 12h8"/>
+      </svg>
+      Add Vehicle
+    </a>
+  </nav>
+
+  <!-- ══════════════════════════════════════════════════
+       MAIN CONTENT
+  ══════════════════════════════════════════════════ -->
+  <main class="main">
+
+    <!-- Alert container (for JS-injected messages) -->
+    <div id="alertContainer"></div>
+
+    <!-- Page header -->
+    <div class="page-header">
+      <div>
+        <h1>Dashboard</h1>
+        <p>Welcome back! Here's a quick overview of your vehicles.</p>
+      </div>
+      <a href="add-vehicle.html" class="btn btn-primary">
+        <!-- Plus icon -->
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+             stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" d="M12 5v14M5 12h14"/>
+        </svg>
+        Add Vehicle
+      </a>
+    </div>
+
+    <!-- ── Stats row ── -->
+    <div class="stats-grid">
+
+      <div class="stat-card">
+        <div class="stat-card__icon icon-blue">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+               stroke="currentColor" stroke-width="1.8">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M8 6h8l2 5H6L8 6zM3 11h18v4H3v-4zm3 4v2m12-2v2"/>
+            <circle cx="6.5" cy="17.5" r="1.5"/>
+            <circle cx="17.5" cy="17.5" r="1.5"/>
+          </svg>
+        </div>
+        <div class="stat-card__label">Total Vehicles</div>
+        <div class="stat-card__value" id="statVehicles">—</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-card__icon icon-green">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+               stroke="currentColor" stroke-width="1.8">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2
+                 M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2
+                 m-6 9l2 2 4-4"/>
+          </svg>
+        </div>
+        <div class="stat-card__label">Service Records</div>
+        <div class="stat-card__value" id="statServices">—</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-card__icon icon-amber">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+               stroke="currentColor" stroke-width="1.8">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2
+                 3 .895 3 2-1.343 2-3 2m0-8V6m0 12v-2
+                 M6.343 6.343L5.636 5.636m12.728 12.728-.707-.707
+                 M6.343 17.657l-.707.707M18.364 5.636l-.707.707"/>
+          </svg>
+        </div>
+        <div class="stat-card__label">Total Spent</div>
+        <div class="stat-card__value" id="statSpent">—</div>
+      </div>
+
+    </div>
+
+    <!-- ── Recent service activity ── -->
+    <div class="card">
+      <div class="card__title">Recent Service Activity</div>
+      <div id="recentServicesList">
+        <!-- Populated by dashboard.js inline script below -->
+      </div>
+    </div>
+
+    <!-- ── Quick links ── -->
+    <div style="margin-top:1.5rem; display:flex; gap:.75rem; flex-wrap:wrap;">
+      <a href="vehicles.html" class="btn btn-outline">View All Vehicles</a>
+      <a href="add-vehicle.html" class="btn btn-outline">Add a New Vehicle</a>
+    </div>
+
+  </main>
+
+  <!-- ══════════════════════════════════════════════════
+       SCRIPTS
+       Order matters: storage → app → page logic
+  ══════════════════════════════════════════════════ -->
+  <script src="js/storage.js"></script>
+  <script src="js/app.js"></script>
+
+  <!-- Inline dashboard logic (small enough to keep here) -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const summary = getSummary();
+
+      // Fill stat cards
+      document.getElementById('statVehicles').textContent = summary.totalVehicles;
+      document.getElementById('statServices').textContent = summary.totalServices;
+      document.getElementById('statSpent').textContent    = formatCurrency(summary.totalSpent);
+
+      // Build recent activity list
+      const listEl = document.getElementById('recentServicesList');
+
+      if (summary.recentServices.length === 0) {
+        listEl.innerHTML = `
+          <div class="empty-state">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2
+                   M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+            </svg>
+            <h3>No service records yet</h3>
+            <p>Add a vehicle and log its first service to see activity here.</p>
+          </div>`;
+        return;
+      }
+
+      const rows = summary.recentServices.map(s => {
+        const vehicle = getVehicleById(s.vehicleId);
+        const vehicleName = vehicle
+          ? vehicle.year + ' ' + vehicle.make + ' ' + vehicle.model
+          : 'Unknown Vehicle';
+        return `
+          <div style="display:flex;align-items:center;justify-content:space-between;
+                      padding:.65rem 0;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:.5rem;">
+            <div>
+              <strong>${s.type}</strong>
+              <span style="color:var(--text-muted);font-size:.85rem;margin-left:.5rem;">
+                — <a href="vehicle-details.html?id=${s.vehicleId}">${vehicleName}</a>
+              </span>
+            </div>
+            <div style="display:flex;gap:.75rem;align-items:center;font-size:.85rem;color:var(--text-muted);">
+              <span>${formatDate(s.date)}</span>
+              ${s.cost !== null ? `<span>${formatCurrency(s.cost)}</span>` : ''}
+            </div>
+          </div>`;
+      }).join('');
+
+      listEl.innerHTML = rows;
+    });
+  </script>
+
+</body>
+</html>

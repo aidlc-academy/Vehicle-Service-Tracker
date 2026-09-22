@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Add Vehicle — Vehicle Service Tracker</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <div class="overlay" id="overlay"></div>
+
+  <!-- ══════════════════════════════════════════════════
+       HEADER
+  ══════════════════════════════════════════════════ -->
+  <header class="header">
+    <a class="header__logo" href="index.html">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+           stroke="currentColor" stroke-width="1.8">
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="M8 6h8l2 5H6L8 6zM3 11h18v4H3v-4zm3 4v2m12-2v2"/>
+        <circle cx="6.5" cy="17.5" r="1.5"/>
+        <circle cx="17.5" cy="17.5" r="1.5"/>
+      </svg>
+      Service<span>Tracker</span>
+    </a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+           stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+  </header>
+
+  <!-- ══════════════════════════════════════════════════
+       SIDEBAR
+  ══════════════════════════════════════════════════ -->
+  <nav class="sidebar" id="sidebar" aria-label="Main navigation">
+    <p class="nav__label">Menu</p>
+
+    <a class="nav__link" href="index.html">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+           stroke="currentColor" stroke-width="1.8">
+        <rect x="3" y="3" width="7" height="7" rx="1"/>
+        <rect x="14" y="3" width="7" height="7" rx="1"/>
+        <rect x="3" y="14" width="7" height="7" rx="1"/>
+        <rect x="14" y="14" width="7" height="7" rx="1"/>
+      </svg>
+      Dashboard
+    </a>
+
+    <a class="nav__link" href="vehicles.html">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+           stroke="currentColor" stroke-width="1.8">
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="M8 6h8l2 5H6L8 6zM3 11h18v4H3v-4zm3 4v2m12-2v2"/>
+        <circle cx="6.5" cy="17.5" r="1.5"/>
+        <circle cx="17.5" cy="17.5" r="1.5"/>
+      </svg>
+      My Vehicles
+    </a>
+
+    <a class="nav__link" href="add-vehicle.html">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+           stroke="currentColor" stroke-width="1.8">
+        <circle cx="12" cy="12" r="9"/>
+        <path stroke-linecap="round" d="M12 8v8M8 12h8"/>
+      </svg>
+      Add Vehicle
+    </a>
+  </nav>
+
+  <!-- ══════════════════════════════════════════════════
+       MAIN CONTENT
+  ══════════════════════════════════════════════════ -->
+  <main class="main">
+
+    <div id="alertContainer"></div>
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="index.html">Dashboard</a>
+      <span class="sep">›</span>
+      <a href="vehicles.html">My Vehicles</a>
+      <span class="sep">›</span>
+      <span>Add Vehicle</span>
+    </nav>
+
+    <!-- Page header -->
+    <div class="page-header">
+      <div>
+        <h1>Add Vehicle</h1>
+        <p>Fill in the details below to add a new vehicle to your tracker.</p>
+      </div>
+    </div>
+
+    <!-- ── Form card ── -->
+    <div class="form-card">
+      <form id="addVehicleForm" novalidate>
+
+        <!-- Make & Model on same row (desktop) -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+          <div class="form-group">
+            <label for="make">Make <span style="color:var(--danger)">*</span></label>
+            <input type="text" id="make" name="make"
+                   placeholder="e.g. Toyota"
+                   maxlength="50"
+                   autocomplete="off"
+                   required />
+          </div>
+          <div class="form-group">
+            <label for="model">Model <span style="color:var(--danger)">*</span></label>
+            <input type="text" id="model" name="model"
+                   placeholder="e.g. Camry"
+                   maxlength="50"
+                   autocomplete="off"
+                   required />
+          </div>
+        </div>
+
+        <!-- Year & License plate -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+          <div class="form-group">
+            <label for="year">Year <span style="color:var(--danger)">*</span></label>
+            <input type="number" id="year" name="year"
+                   placeholder="e.g. 2020"
+                   min="1900" max="2100"
+                   required />
+          </div>
+          <div class="form-group">
+            <label for="licensePlate">License Plate</label>
+            <input type="text" id="licensePlate" name="licensePlate"
+                   placeholder="e.g. ABC-1234"
+                   maxlength="20"
+                   autocomplete="off" />
+          </div>
+        </div>
+
+        <!-- Color -->
+        <div class="form-group">
+          <label for="color">Color</label>
+          <input type="text" id="color" name="color"
+                 placeholder="e.g. Silver"
+                 maxlength="30"
+                 autocomplete="off" />
+        </div>
+
+        <!-- Notes -->
+        <div class="form-group">
+          <label for="notes">Notes</label>
+          <textarea id="notes" name="notes"
+                    placeholder="Any extra details about this vehicle…"
+                    maxlength="300"></textarea>
+          <span class="form-hint">Optional — max 300 characters.</span>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                 stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" d="M12 5v14M5 12h14"/>
+            </svg>
+            Save Vehicle
+          </button>
+          <a href="vehicles.html" class="btn btn-outline">Cancel</a>
+        </div>
+
+      </form>
+    </div>
+
+  </main>
+
+  <!-- Scripts -->
+  <script src="js/storage.js"></script>
+  <script src="js/app.js"></script>
+
+  <!-- Inline form handler -->
+  <script>
+    document.getElementById('addVehicleForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const make  = document.getElementById('make').value.trim();
+      const model = document.getElementById('model').value.trim();
+      const year  = document.getElementById('year').value.trim();
+
+      // Validation
+      if (!make) {
+        showAlert('alertContainer', 'Please enter the vehicle make.', 'warning');
+        document.getElementById('make').focus();
+        return;
+      }
+      if (!model) {
+        showAlert('alertContainer', 'Please enter the vehicle model.', 'warning');
+        document.getElementById('model').focus();
+        return;
+      }
+      if (!year || isNaN(year) || year < 1900 || year > 2100) {
+        showAlert('alertContainer', 'Please enter a valid year (1900–2100).', 'warning');
+        document.getElementById('year').focus();
+        return;
+      }
+
+      const vehicle = addVehicle({
+        make,
+        model,
+        year,
+        licensePlate: document.getElementById('licensePlate').value.trim(),
+        color:        document.getElementById('color').value.trim(),
+        notes:        document.getElementById('notes').value.trim(),
+      });
+
+      // Redirect to the new vehicle's detail page
+      window.location.href = 'vehicle-details.html?id=' + vehicle.id;
+    });
+  </script>
+
+</body>
+</html>
